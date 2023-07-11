@@ -1,26 +1,24 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import React from "react";
+import { useState } from "react";
 import "./App.css";
+import Countries from "./components/Countries";
+import Headder from "./components/Headder";
+import Searchh from "./components/Searchh";
+import { useCountryAPI } from "./components/useCountryAPI";
+import CountryPage from "./components/CountryPage";
 
+export let devContext = React.createContext();
 function App() {
+  const country = useCountryAPI();
+
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <devContext.Provider value={country}>
+      <div className="grid grid-cols-1 items-center justify-center pl-10 gap-5">
+        <Headder />
+        <Searchh />
+        <Countries />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card" style={{ fontSize: "28px" }}>
-        <p>Enjoy building this project</p>
-      </div>
-      <p style={{ fontSize: "24px" }} className="read-the-docs">
-        Countries API project
-      </p>
-    </>
+    </devContext.Provider>
   );
 }
 
