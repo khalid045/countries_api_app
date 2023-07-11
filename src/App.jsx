@@ -14,7 +14,7 @@ function App() {
   return (
     <devContext.Provider value={country}>
       <div className="grid grid-cols-1 items-center justify-center pl-10 gap-5">
-        <Headder />
+        <Headders />
         <Searchh />
         <Countries />
       </div>
