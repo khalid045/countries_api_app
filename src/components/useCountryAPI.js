@@ -20,5 +20,37 @@ export const useCountryAPI = () => {
     fetchData();
   }, []);
 
-  return { apiData, isloading, iserror, fetchData };
+  const searchData = async (country) => {
+    setIsLoading(true);
+    try {
+      const respons = await axios.get(
+        `https://restcountries.com/v2/name/${country}`
+      );
+      setApiData(respons.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsError("no data", error);
+    }
+  };
+  useEffect(() => {
+    searchData();
+  }, []);
+
+  const regionData = async (region) => {
+    setIsLoading(true);
+    try {
+      const respons = await axios.get(
+        `https://restcountries.com/v2/region/${region}`
+      );
+      setApiData(respons.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsError("no data", error);
+    }
+  };
+  useEffect(() => {
+    regionData();
+  }, []);
+
+  return { apiData, isloading, iserror, fetchData, searchData, regionData };
 };

@@ -1,3 +1,6 @@
-body {
+#light {
   background-color: whitesmoke;
+}
+#dark {
+  background-color: rgb(92, 92, 103);
 }
