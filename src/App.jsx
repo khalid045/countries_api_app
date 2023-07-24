@@ -1,35 +1,49 @@
-import React, { useContext } from "react";
-import { useState } from "react";
 import "./App.css";
 import Countries from "./components/Countries";
+import CountryPage from "./components/CountryPage";
 import Headder from "./components/Headder";
 import Searchh from "./components/Searchh";
 import { useCountryAPI } from "./components/useCountryAPI";
-import CountryPage from "./components/CountryPage";
+import { createContext, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
-export let devContext = React.createContext();
-export const ThemeContext = React.createContext(null);
+export const ThemeContext = createContext(null);
 
 function App() {
-  const country = useCountryAPI();
   const [theme, setTheme] = useState("light");
+
   const toggleTheme = () => {
-    setTheme((curr) => (curr === "light" ? "dark" : "light"));
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
   };
+  const { apiData, isloading, iserror, fetchData, searchData, regionData } =
+    useCountryAPI();
 
   return (
-    <ThemeContext.Provider value={toggleTheme}>
-      <devContext.Provider value={country}>
-        <div
-          id={theme}
-          className="grid grid-cols-1 items-center justify-center pl-10 "
-        >
-          <Headder />
-          <Searchh />
-          <Countries />
-        </div>
-      </devContext.Provider>
-    </ThemeContext.Provider>
+    <>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+              <div
+                id={theme}
+                className="grid grid-cols-1 items-center justify-center pl-10 "
+              >
+                <Headder themeChange={toggleTheme} />
+                <Searchh searchdata={{ searchData, regionData }} />
+                <div className="md:w-[70%] md:grid md:grid-cols-3 lg:w-[90%] lg:grid lg:grid-cols-5">
+                  {apiData &&
+                    apiData.map((country) => {
+                      return <Countries key={country.id} data={country} />;
+                    })}
+                </div>
+              </div>
+            </ThemeContext.Provider>
+          }
+        />
+        <Route path="CountryPage" element={<CountryPage />} />
+      </Routes>
+    </>
   );
 }
 

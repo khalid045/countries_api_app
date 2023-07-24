@@ -5,6 +5,7 @@ export const useCountryAPI = () => {
   const [apiData, setApiData] = useState(null);
   const [isloading, setIsLoading] = useState(false);
   const [iserror, setIsError] = useState(null);
+  // const [countrypagess, setCountrypagess] = useState();
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -32,9 +33,6 @@ export const useCountryAPI = () => {
       setIsError("no data", error);
     }
   };
-  useEffect(() => {
-    searchData();
-  }, []);
 
   const regionData = async (region) => {
     setIsLoading(true);
@@ -52,5 +50,25 @@ export const useCountryAPI = () => {
     regionData();
   }, []);
 
-  return { apiData, isloading, iserror, fetchData, searchData, regionData };
+  // const borderData = async (borders) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const respons = await axios.get(
+  //       `https://restcountries.com/v2/${borders}`
+  //     );
+  //     setApiData(respons.data);
+  //     setIsLoading(false);
+  //   } catch (error) {
+  //     setIsError("no data", error);
+  //   }
+  // };
+
+  return {
+    apiData,
+    isloading,
+    iserror,
+    fetchData,
+    searchData,
+    regionData,
+  };
 };
