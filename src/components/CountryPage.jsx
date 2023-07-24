@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Headder from "../components/Headder";
 import { ArrowBack } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -6,16 +6,22 @@ import { useLocation } from "react-router-dom";
 import { useCountryAPI } from "./useCountryAPI";
 
 const CountryPage = () => {
-  const { apiData, isloading, searchData, borderData } = useCountryAPI();
-  // console.log(localStorage.getItem("country"));
+  const { apiData, isloading, searchData } = useCountryAPI();
+  //const [filteredCountry, setFilteredCountry] = useState(null);
+
   const filteredCountry = apiData?.filter((country) => {
     return country.name === localStorage.getItem("country");
   });
 
   // useEffect(() => {
-  //   searchData(localStorage.getItem("country"));
+  //   setFilteredCountry(
+  //     apiData?.filter((country) => {
+  //       return country.name === localStorage.getItem("country");
+  //     })
+  //   );
   // }, [localStorage.getItem("country")]);
-  // console.log(borderData);
+  // console.log(filteredCountry);
+
   return (
     <div>
       <Headder />
@@ -60,17 +66,18 @@ const CountryPage = () => {
             <div className=" md:mr-5">
               <p className="">Border Countries:</p>
             </div>
-
             <div className=" justify-around">
-              <span className="w-[100px] h-[45px] border-2 border-light py-2 px-5 cursor-pointer mr-2">
-                France
-              </span>
-              <span className="w-[100px] h-[45px] border-2 border-light py-2 px-5 cursor-pointer">
-                Canada
-              </span>
-              <span className="w-[100px] h-[45px] border-2 border-light py-2 px-5 cursor-pointer ml-2">
-                Italy
-              </span>
+              {filteredCountry &&
+                filteredCountry[0]?.borders &&
+                filteredCountry[0]?.borders.map((value, index) => (
+                  <button className=" gap-2 mr-4 border-2 p-2" key={index}>
+                    {
+                      apiData?.filter(
+                        (country) => country.alpha3Code === value
+                      )[0].name
+                    }
+                  </button>
+                ))}
             </div>
           </div>
         </div>

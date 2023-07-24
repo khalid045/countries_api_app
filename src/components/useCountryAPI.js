@@ -50,11 +50,11 @@ export const useCountryAPI = () => {
     regionData();
   }, []);
 
-  // const borderData = async (borders) => {
+  // const borderData = async (country) => {
   //   setIsLoading(true);
   //   try {
   //     const respons = await axios.get(
-  //       `https://restcountries.com/v2/${borders}`
+  //       `https://restcountries.com/v2/alpha/${country}`
   //     );
   //     setApiData(respons.data);
   //     setIsLoading(false);
@@ -63,12 +63,5 @@ export const useCountryAPI = () => {
   //   }
   // };
 
-  return {
-    apiData,
-    isloading,
-    iserror,
-    fetchData,
-    searchData,
-    regionData,
-  };
+  return { apiData, isloading, iserror, fetchData, searchData, regionData };
 };
