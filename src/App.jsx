@@ -3,20 +3,20 @@ import Countries from "./components/Countries";
 import CountryPage from "./components/CountryPage";
 import Headder from "./components/Headder";
 import Searchh from "./components/Searchh";
-import { useCountryAPI } from "./components/useCountryAPI";
+import useCountryAPI from "./components/useCountryAPI";
 import { createContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 export const ThemeContext = createContext(null);
 
 function App() {
+  const { dicData, isloading, iserror, fetchData, searchWord } =
+    useDictionaryAPI();
   const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
     setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
   };
-  const { apiData, isloading, iserror, fetchData, searchData, regionData } =
-    useCountryAPI();
 
   return (
     <>
